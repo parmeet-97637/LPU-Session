@@ -169,4 +169,164 @@ select age,avg(salary) from test where age>21 group by age having avg(salary)>10
 -- select employes whose age is greater than 21 and avg salary is greater than 100000 order on basis of salary in ascending order
 select age,avg(salary) from test where age>21 group by age having avg(salary)>100000 order by avg(salary) asc;
 
+----------
+-- Views
+-- Views are the virtual table which are created from a single or multiple tables
+-- We cannot update view, it is read only
+-- View is created for data security
+-- End users we always give views
 
+-- Create view
+create view test_view as select * from  test where age>21;
+
+-- select view
+select * from test_view;
+
+-- Drop view
+drop view test_view;
+
+-- Nested queries
+create table marks (
+ID integer,
+marks decimal(5,2),
+subject varchar(20));
+
+insert into marks VALUES(1, 47,'English'),(1,69,'Maths'),(1,80,'Science');
+insert into marks VALUES(2, 86,'English'),(2,45,'Maths'),(2,99,'Science');
+insert into marks VALUES(3, 98,'English'),(3,67,'Maths'),(3,96,'Science');
+insert into marks VALUES(4, 38,'English'),(4,78,'Maths'),(4,90,'Science');
+insert into marks VALUES(9, 69,'English'),(9,89,'Maths'),(9,78,'Science');
+-- insert into marks VALUES(6, 45,'English'),(6,96,'Maths'),(6,87,'Science');
+-- insert into marks VALUES(7, 71,'English'),(7,69,'Maths'),(7,80,'Science');
+
+-- check
+select * from marks;
+
+-- select only those employees details whose ID is present in marks table
+select * from test where ID in (select ID from marks);
+
+-- Joins
+-- Inner Join 
+-- Outer Join
+-- Left Join
+-- Right Join
+
+-- inner join
+select * from test as a inner join marks as b on a.ID =b.ID;
+
+select a.ID, a.Name, round(avg(b.marks),2) as average_marks from 
+test a inner join marks b 
+on a.Id = b.ID 
+group by ID;
+
+-- right join
+select * from test a right join marks b on a.Id =b.id;
+
+-- left join
+select * from test a left join marks b on a.id = b.id;
+
+-- cross join
+select * from test a CROSS JOIN marks b;
+
+-- create table employees
+create table employees (
+ID integer,
+Name varchar(20),
+Age int2,
+Salary decimal(12,2),
+Gender Char(1),
+joining_date date,
+primary key(ID) );
+
+insert into employees VALUES(10,'Madhukumar',21,67908,'M','2022-08-08');
+-- check
+select * from employees;
+
+-- union
+select * from test 
+UNION
+select * from employees;
+
+-- insert another record in employee
+insert into employees VALUES(1,'Parmeet',27,50000,'M','2020-01-01'); 
+-- check
+select * from employees;
+
+-- union : excludes duplicate records
+-- union ALL : include duplicate records
+select * from test 
+UNION ALL
+select * from employees;
+
+select * from test;
+--  create table with referential constraint
+create  table personal_details
+(SNO integer,
+mob_no int8,
+Address varchar(50),
+Address_type varchar(10),
+constraint SNO foreign key (SNO) references employees(ID)
+);
+-- check
+select * from personal_details;
+-- insert records
+insert into personal_details VALUES(1,9999999999,'Indore','Permanent'),(1,9898989898,'Pune','Current');
+select * from personal_details;
+
+-- inserting the id which is not present in test table
+insert into personal_details VALUES(10,9999999999,'Indore','Permanent'),(10,9898989898,'Pune','Current');
+
+select * from personal_details;
+
+-- update the records
+-- update table_name set column = value where condition
+-- Let us update marks table, ID 1 to 2
+-- verify
+ select * from marks where ID =1;
+ 
+ -- set dafe updates
+ SET SQL_SAFE_UPDATES =0;
+ 
+ -- update
+ update marks set ID=2 where ID=1;
+ 
+ -- turn off
+ SET SQL_SAFE_UPDATES =1;
+ 
+ -- verify
+ select * from marks where ID=2;
+ 
+ -- update the ID to 1 where marks is 69 and subject is maths
+ select * from marks where Id=2 and subject='maths' and marks=69;
+ 
+ -- Turn on SQL updates
+ set SQL_SAFE_UPDATEs=0;
+ 
+ -- update the table
+ update marks set ID=1 where Id=2 and subject='maths' and marks=69;
+ 
+  -- Turn off SQL updates
+ set SQL_SAFE_UPDATEs=1;
+ 
+ -- verify
+ select * from marks where Id=1 and subject='maths' and marks=69;
+ 
+ -- Alter the table
+ -- change datatype of age from smallint to int
+ alter table employees
+ modify column Age int;
+ 
+ -- alter the table personal details and add the email id
+ alter table personal_details
+ add email varchar(25);
+ 
+ select * from personal_details;
+ 
+ -- update the email id
+ -- turn on sql safe updates
+ SET SQL_SAFE_UPDATES =0;
+ update personal_details set email='p@gmail.com' where SNO=1;
+ update personal_details set email='s@gmail.com' where SNO=10;
+ SET SQL_SAFE_UPDATES =1;
+ -- verify
+ select * from personal_details;
