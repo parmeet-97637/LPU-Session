@@ -225,6 +225,11 @@ select * from test a right join marks b on a.Id =b.id;
 -- left join
 select * from test a left join marks b on a.id = b.id;
 
+-- outer join  (union of right joing and left join)
+select * from test a right join marks b on a.Id =b.id
+union
+select * from test a left join marks b on a.id = b.id;
+
 -- cross join
 select * from test a CROSS JOIN marks b;
 
@@ -284,7 +289,7 @@ select * from personal_details;
 -- verify
  select * from marks where ID =1;
  
- -- set dafe updates
+ -- set safe updates
  SET SQL_SAFE_UPDATES =0;
  
  -- update
