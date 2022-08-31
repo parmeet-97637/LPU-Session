@@ -167,7 +167,7 @@ select age, avg(salary) from employee group by age;
 -- find the count of male and female employees
 select gender,count(name) as count_of_employee from employee group by gender;
 
--- select the average salary of male employees for each ahe group
+-- select the average salary of male employees for each age group
 select avg(salary), age from employee where gender='M' group by age;
 
 -- Having clause
@@ -266,6 +266,7 @@ select * from employee where salary > (select avg(bank_balance) from personal_de
 -- Outer Join
 -- Right Join
 -- Left Join
+-- Cross Join
 
 -- Inner join
 -- select the employees whose personal details are present

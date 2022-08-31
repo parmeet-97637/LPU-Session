@@ -210,6 +210,7 @@ select * from test where ID in (select ID from marks);
 -- Outer Join
 -- Left Join
 -- Right Join
+-- cross join
 
 -- inner join
 select * from test as a inner join marks as b on a.ID =b.ID;
@@ -335,3 +336,4 @@ select * from personal_details;
  SET SQL_SAFE_UPDATES =1;
  -- verify
  select * from personal_details;
+
