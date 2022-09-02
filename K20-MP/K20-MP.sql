@@ -273,3 +273,26 @@ select * from employee e left join personal_details p on e.Id = p.Sno;
 
 -- cross join
 select count(*) from employee e cross join personal_details p;
+
+
+-- AUTO-INCREMENT
+Create table Persons (
+person_id int Not Null AUTO_INCREMENT,
+first_name varchar(20),
+last_name varchar(20),
+age int,
+primary key(person_id)
+);
+
+-- starting incrementing person_id with 100, by default it will start with 1
+ALTER TABLE Persons auto_increment=100;
+
+insert into persons(first_name,last_name,age) VALUES('Parmeet','Singh',27);
+
+-- check
+select * from persons;
+
+insert into persons(first_name,last_name,age) VALUES('Trishaan','Singh',21);
+
+-- check
+select * from persons;
