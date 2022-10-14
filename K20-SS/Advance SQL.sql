@@ -183,20 +183,3 @@ select *, cal_age(dob) as age from employee1;
 
 
 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
